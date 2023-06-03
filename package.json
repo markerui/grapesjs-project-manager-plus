@@ -5,7 +5,7 @@
     "main": "dist/grapesjs-project-manager.min.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Ju99ernaut/grapesjs-template-manager.git"
+        "url": "https://github.com/markerui/grapesjs-project-manager-self"
     },
     "scripts": {
         "start": "NODE_OPTIONS=--openssl-legacy-provider grapesjs-cli serve",

@@ -1,5 +1,13 @@
 # Grapesjs Project Manager
 
+FORK [grapesjs-template-manager](https://github.com/Ju99ernaut/grapesjs-template-manager)
+
+> add copy pages
+
+> add copy project
+
+> optimize styles
+
 > Requires GrapesJS v0.19.4 or higher.
 
 Project, template and page manager for grapesjs. This version makes use of the [`PageManager`](https://github.com/artf/grapesjs/pull/3411) and has different plugin and package name, the previous version which doesn't make use of the `PageManager` can be found [here](https://github.com/Ju99ernaut/grapesjs-template-manager/tree/template-manager).
