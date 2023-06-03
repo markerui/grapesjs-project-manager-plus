@@ -1,11 +1,11 @@
 {
-    "name": "grapesjs-project-manager-self",
+    "name": "grapesjs-project-manager-plus",
     "version": "1.0.0",
     "description": "Grapesjs Project Manager",
     "main": "dist/grapesjs-project-manager.min.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/markerui/grapesjs-project-manager-self"
+        "url": "https://github.com/markerui/grapesjs-project-manager-plus"
     },
     "scripts": {
         "start": "NODE_OPTIONS=--openssl-legacy-provider grapesjs-cli serve",
