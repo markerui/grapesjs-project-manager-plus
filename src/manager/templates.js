@@ -305,7 +305,7 @@ export default class TemplateManager extends UI {
     }
 
     renderSiteTable(){
-        const { opts } = this;
+        const { opts, editor } = this;
         return this.state.tab === 'pages' ? `
         <div id="site-table">
             <div class="site-wrapper-header">

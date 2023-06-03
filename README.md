@@ -23,9 +23,9 @@ Project, template and page manager for grapesjs. This version makes use of the [
 ### HTML
 ```html
 <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
-<link href="https://unpkg.com/grapesjs-project-manager/dist/grapesjs-project-manager.min.css" rel="stylesheet">
+<link href="https://unpkg.com/grapesjs-project-manager-plus/dist/grapesjs-project-manager-plus.min.css" rel="stylesheet">
 <script src="https://unpkg.com/grapesjs"></script>
-<script src="https://unpkg.com/grapesjs-project-manager"></script>
+<script src="https://unpkg.com/grapesjs-project-manager-plus"></script>
 
 <div id="gjs"></div>
 ```
@@ -41,7 +41,7 @@ const editor = grapesjs.init({
     type: 'indexeddb',
     // ...
   },
-  plugins: ['grapesjs-project-manager'],
+  plugins: ['grapesjs-project-manager-plus'],
 });
 
 // Running commands from panels
@@ -76,7 +76,7 @@ body, html {
 
 ## Summary
 
-* Plugin name: `grapesjs-project-manager`
+* Plugin name: `grapesjs-project-manager-plus`
 * Commands
     * `open-templates`
     * `open-pages`
@@ -136,9 +136,9 @@ window.editor = grapesjs.init({
   storageManager:  {
     type: 'indexeddb'
   },
-  plugins: ['grapesjs-project-manager'],
+  plugins: ['grapesjs-project-manager-plus'],
   pluginsOpts: {
-    'grapesjs-project-manager': { /* Options */ }
+    'grapesjs-project-manager-plus': { /* Options */ }
   }
 });
 ```
@@ -168,9 +168,9 @@ window.editor = grapesjs.init({
   storageManager:  {
     type: 'firestore'
   },
-  plugins: ['grapesjs-project-manager'],
+  plugins: ['grapesjs-project-manager-plus'],
   pluginsOpts: {
-    'grapesjs-project-manager': { 
+    'grapesjs-project-manager-plus': { 
       // Firebase API key
       apiKey: 'FIREBASE_API_KEY',
       // Firebase Auth domain
@@ -203,9 +203,9 @@ window.editor = grapesjs.init({
       }
     }
   },
-  plugins: ['grapesjs-project-manager'],
+  plugins: ['grapesjs-project-manager-plus'],
   pluginsOpts: {
-    'grapesjs-project-manager': { /* options */ }
+    'grapesjs-project-manager-plus': { /* options */ }
   }
 });
 ```
@@ -295,9 +295,9 @@ All the fields are generated from the editor so you just need to setup your API 
 ## Download
 
 * CDN
-  * `https://unpkg.com/grapesjs-project-manager`
+  * `https://unpkg.com/grapesjs-project-manager-plus`
 * NPM
-  * `npm i grapesjs-project-manager`
+  * `npm i grapesjs-project-manager-plus`
 * GIT
   * `git clone https://github.com/Ju99ernaut/grapesjs-template-manager.git`
 
@@ -308,9 +308,9 @@ All the fields are generated from the editor so you just need to setup your API 
 Directly in the browser
 ```html
 <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
-<link href="https://unpkg.com/grapesjs-project-manager/dist/grapesjs-project-manager.min.css" rel="stylesheet">
+<link href="https://unpkg.com/grapesjs-project-manager-plus/dist/grapesjs-project-manager-plus.min.css" rel="stylesheet">
 <script src="https://unpkg.com/grapesjs"></script>
-<script src="path/to/grapesjs-project-manager.min.js"></script>
+<script src="path/to/grapesjs-project-manager-plus.min.js"></script>
 
 <div id="gjs"></div>
 
@@ -323,9 +323,9 @@ Directly in the browser
         type: 'indexeddb',
         // ...
       },
-      plugins: ['grapesjs-project-manager'],
+      plugins: ['grapesjs-project-manager-plus'],
       pluginsOpts: {
-        'grapesjs-project-manager': { /* options */ }
+        'grapesjs-project-manager-plus': { /* options */ }
       }
   });
 </script>
@@ -334,9 +334,9 @@ Directly in the browser
 Modern javascript
 ```js
 import grapesjs from 'grapesjs';
-import plugin from 'grapesjs-project-manager';
+import plugin from 'grapesjs-project-manager-plus';
 import 'grapesjs/dist/css/grapes.min.css';
-import 'grapesjs-project-manager/dist/grapesjs-project-manager.min.css';
+import 'grapesjs-project-manager-plus/dist/grapesjs-project-manager-plus.min.css';
 
 const editor = grapesjs.init({
   container : '#gjs',
