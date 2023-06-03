@@ -13,6 +13,7 @@ export default class TemplateManager extends UI {
         this.handleCreate = this.handleCreate.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.openEdit = this.openEdit.bind(this);
+        this.handleCopy = this.handleCopy.bind(this);
 
         /* Set initial app state */
         this.state = {
@@ -26,6 +27,10 @@ export default class TemplateManager extends UI {
             sortBy: 'published_at',
             sortOrder: 'desc'
         };
+
+        editor.Modal.onceClose(() => {
+            this.state.tab = 'pages'
+        });
     }
 
     get editableId() {
@@ -156,6 +161,31 @@ export default class TemplateManager extends UI {
         editor.runCommand('open-settings');
     }
 
+    async handleCopy(e){
+        const { cs, setState, opts, state, editor } = this;
+        const copyId = e.currentTarget.dataset.id;
+        const copyProInfo = state.sites.find(item=>item.id === copyId)
+        if (opts.confirmCopyProject()) {
+            console.log(copyProInfo)
+            const id = editor.runCommand('get-uuidv4');
+            const def = {
+                ...copyProInfo,
+                id,
+                name: `${copyProInfo.name}-copy`
+            };
+            cs.setId(id);
+            await cs.store(def);
+            cs.setIsTemplate(false);
+            const res = await editor.load();
+            cs.setId(res.id);
+            cs.setName(res.name);
+            cs.setThumbnail(res.thumbnail || '');
+            cs.setDescription(res.description || 'No description');
+            const sites = await cs.loadAll();
+            setState({ sites });
+        }
+    }
+
     handleEdit(data) {
         this.opts.onUpdateAsync(this.cs.update({ ...data, updated_at: Date.now() }));
     }
@@ -176,7 +206,7 @@ export default class TemplateManager extends UI {
 
         if (loading) return opts.loader || '<div>Loading sites...</div>';
 
-        if (!sites.length) return opts.nosites || '<div>No Sites</div>';
+        if (!sites.length) return opts.nosites || '<div style="padding: 10px 0;">No Sites</div>';
 
         let order
         if (sortBy === 'id') {
@@ -250,16 +280,18 @@ export default class TemplateManager extends UI {
                                 ${pages.length || 1}
                             </div>
                         </div>
-                        <div class="site-create-time">${createdAt}</div>
+                        
                         ${opts.size ? `<div class="site-size" title="${size} KB">
                             ${size.toFixed(2)} KB
                         </div>` : ''}
                         <div class="site-actions">
+                            <i class="${pfx}caret-icon fa fa-copy copy" title="${editor.I18n.t('grapesjs-project-manager.templates.titles.edit')}" data-id="${id}"></i>
                             <i class="${pfx}caret-icon fa fa-hand-pointer-o edit" title="${editor.I18n.t('grapesjs-project-manager.templates.titles.edit')}" data-id="${id}"></i>
                             ${!(cs.currentId === id) ? `<i class="${pfx}caret-icon fa fa-trash-o delete" title="${editor.I18n.t('grapesjs-project-manager.templates.titles.delete')}" data-id="${id}"></i>` : ''}
                         </div>
                     </div>`;
             }).join('\n');
+            // <div class="site-create-time">${createdAt}</div>
 
         if (!matchingSites.length) {
             if (tab === 'templates') return opts.nosites || '<div>No Templates Available.</div>';
@@ -270,6 +302,66 @@ export default class TemplateManager extends UI {
                 </div>`;
         }
         return matchingSites;
+    }
+
+    renderSiteTable(){
+        const { opts } = this;
+        return this.state.tab === 'pages' ? `
+        <div id="site-table">
+            <div class="site-wrapper-header">
+                <div
+                    class="site-screenshot-header header"
+                    data-sort="id"
+                    title="${editor.I18n.t('grapesjs-project-manager.templates.titles.info')}"
+                >
+                    ${editor.I18n.t('grapesjs-project-manager.templates.info')}
+                </div>
+                <div
+                    class="site-info header"
+                    data-sort="id"
+                ></div>
+                <div
+                    class="site-update-time header"
+                    data-sort="updated_at"
+                    title="${editor.I18n.t('grapesjs-project-manager.templates.titles.updated')}"
+                >
+                    ${editor.I18n.t('grapesjs-project-manager.templates.updated')}
+                </div>
+                <div
+                    class="site-pages header"
+                    data-sort="pages"
+                    title="${editor.I18n.t('grapesjs-project-manager.templates.titles.pages')}"
+                >
+                    ${editor.I18n.t('grapesjs-project-manager.templates.pages')}
+                </div>
+                
+                ${opts.size ? `<div
+                    class="site-size header"
+                    data-sort="size"
+                    title="${editor.I18n.t('grapesjs-project-manager.templates.titles.size')}"
+                >
+                    ${editor.I18n.t('grapesjs-project-manager.templates.size')}
+                </div>` : ''}
+                <div
+                    class="site-actions header"
+                    data-sort="id"
+                    title="${editor.I18n.t('grapesjs-project-manager.templates.titles.actions')}"
+                >
+                    ${editor.I18n.t('grapesjs-project-manager.templates.actions')}
+                </div>
+            </div>
+            <div id="site-list">
+                ${this.renderSiteList()}
+            </div>
+        </div>` : ''
+
+        // <div
+        //     class="site-create-time header"
+        //     data-sort="created_at"
+        //     title="${editor.I18n.t('grapesjs-project-manager.templates.titles.created')}"
+        // >
+        //     ${editor.I18n.t('grapesjs-project-manager.templates.created')}
+        // </div>
     }
 
     renderSiteActions() {
@@ -313,6 +405,7 @@ export default class TemplateManager extends UI {
     }
 
     update() {
+        this.$el?.find('#site-table').html(this.renderSiteTable());
         this.$el?.find('#site-list').html(this.renderSiteList());
         this.$el?.find('#tm-actions').html(this.renderSiteActions());
         const sites = this.$el?.find('.site-wrapper');
@@ -337,13 +430,13 @@ export default class TemplateManager extends UI {
         this.$el?.find('#open').on('click', this.handleOpen);
         this.$el?.find('#create').on('click', this.handleCreate);
         this.$el?.find('i.edit').on('click', this.openEdit);
+        this.$el?.find('i.copy').on('click', this.handleCopy);
         this.$el?.find('i.delete').on('click', this.handleDelete);
     }
 
     render() {
-        const { $, pfx, opts, editor } = this;
+        const { $, pfx, editor } = this;
         const { tab } = this.state
-
         // Do stuff on render
         this.onRender();
         this.$el?.remove();
@@ -356,63 +449,13 @@ export default class TemplateManager extends UI {
                             ${editor.I18n.t('grapesjs-project-manager.templates.all')}
                         </button>
                         <button id="templates" class="${pfx}tablinks ${tab === 'templates' ? 'active' : ''}"">
-                            ${editor.I18n.t('grapesjs-project-manager.templates.templates')}
+                            ${editor.I18n.t('grapesjs-project-manager.templates.newTemplates')}
                         </button>
                     </div>
                     <div id="tm-actions">
                         ${this.renderSiteActions()}
                     </div>
-                    <div class="site-wrapper-header">
-                        <div
-                            class="site-screenshot-header header"
-                            data-sort="id"
-                            title="${editor.I18n.t('grapesjs-project-manager.templates.titles.info')}"
-                        >
-                            ${editor.I18n.t('grapesjs-project-manager.templates.info')}
-                        </div>
-                        <div
-                            class="site-info header"
-                            data-sort="id"
-                        ></div>
-                        <div
-                            class="site-update-time header"
-                            data-sort="updated_at"
-                            title="${editor.I18n.t('grapesjs-project-manager.templates.titles.updated')}"
-                        >
-                            ${editor.I18n.t('grapesjs-project-manager.templates.updated')}
-                        </div>
-                        <div
-                            class="site-pages header"
-                            data-sort="pages"
-                            title="${editor.I18n.t('grapesjs-project-manager.templates.titles.pages')}"
-                        >
-                            ${editor.I18n.t('grapesjs-project-manager.templates.pages')}
-                        </div>
-                        <div
-                            class="site-create-time header"
-                            data-sort="created_at"
-                            title="${editor.I18n.t('grapesjs-project-manager.templates.titles.created')}"
-                        >
-                            ${editor.I18n.t('grapesjs-project-manager.templates.created')}
-                        </div>
-                        ${opts.size ? `<div
-                            class="site-size header"
-                            data-sort="size"
-                            title="${editor.I18n.t('grapesjs-project-manager.templates.titles.size')}"
-                        >
-                            ${editor.I18n.t('grapesjs-project-manager.templates.size')}
-                        </div>` : ''}
-                        <div
-                            class="site-actions header"
-                            data-sort="id"
-                            title="${editor.I18n.t('grapesjs-project-manager.templates.titles.actions')}"
-                        >
-                            ${editor.I18n.t('grapesjs-project-manager.templates.actions')}
-                        </div>
-                    </div>
-                    <div id="site-list">
-                        ${this.renderSiteList()}
-                    </div>
+                    ${this.renderSiteTable()}
                 </div>
             </div>`);
         cont.find('.header').on('click', this.handleSort);

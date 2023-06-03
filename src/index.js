@@ -32,6 +32,11 @@ export default (editor, opts = {}) => {
                 return confirm('Are you sure to delete this project')
             },
 
+            // Confirm copy project
+            confirmCopyProject() {
+                return confirm('Are you sure copy this project')
+            },
+
             // Confirm delete page
             confirmDeletePage() {
                 return confirm('Are you sure to delete this page')

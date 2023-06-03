@@ -5,6 +5,7 @@ export default class PagesApp extends UI {
         super(editor, opts);
         this.addPage = this.addPage.bind(this);
         this.selectPage = this.selectPage.bind(this);
+        this.copyPage = this.copyPage.bind(this);
         this.removePage = this.removePage.bind(this);
         this.isSelected = this.isSelected.bind(this);
         this.handleNameInput = this.handleNameInput.bind(this);
@@ -48,6 +49,19 @@ export default class PagesApp extends UI {
 
     selectPage(e) {
         this.pm.select(e.currentTarget.dataset.key);
+        this.update();
+    }
+
+    copyPage(e) {
+        const pageKey = e.currentTarget.dataset.key
+        const { pm } = this;
+        const page = pm.get(pageKey);
+        const component = page.getMainComponent();
+        const pageName = page.get('name') || pageKey
+        pm.add({
+            name: `${pageName}-copy`,
+            component
+        });
         this.update();
     }
 
@@ -103,9 +117,12 @@ export default class PagesApp extends UI {
                 class="page ${isSelected(page) ? 'selected' : ''}"
             >
                 <i class="fa fa-file-o" style="margin:5px;"></i>
-                ${page.get('name') || page.id}
-                ${isSelected(page) || page.get('internal') ? '' : `<span class="page-close" data-key="${page.id || page.get('name')}">&Cross;</span>`}
-                ${page.get('internal') ? '' : `<span class="page-edit" data-key="${page.id || page.get('name')}"><i class="fa fa-hand-pointer-o"></i></span>`}
+                <div class="page-title">${page.get('name') || page.id}</div>
+                <div class="page-oper">
+                    ${page.get('internal') ? '' : `<span class="page-edit" data-key="${page.id || page.get('name')}"><i class="fa fa-hand-pointer-o"></i></span>`}
+                    ${page.get('internal') ? '' : `<span class="page-copy" data-key="${page.id || page.get('name')}"><i class="fa fa-copy"></i></span>`}
+                    ${isSelected(page) || page.get('internal') ? '' : `<span class="page-close" data-key="${page.id || page.get('name')}">&Cross;</span>`}
+                </div>
             </div>`).join("\n");
     }
 
@@ -113,6 +130,7 @@ export default class PagesApp extends UI {
         this.$el?.find('.pages').html(this.renderPagesList());
         this.$el?.find('.page').on('click', this.selectPage);
         this.$el?.find('.page-edit').on('click', this.openEdit);
+        this.$el?.find('.page-copy').on('click', this.copyPage);
         this.$el?.find('.page-close').on('click', this.removePage);
     }
 

@@ -81,6 +81,7 @@ $mainColor: #936a9b;
 }
 
 .tm-input {
+    flex: 1;
     border-radius: 2px;
     font-size: 16px;
     padding: 11px 15px;
@@ -90,7 +91,7 @@ $mainColor: #936a9b;
     border: none;
     outline: none;
     transition: all .3s ease;
-    margin: 20px 0;
+    margin: 20px 20px 20px 0;
     color: white;
     background-color: rgba(0, 0, 0, 0.2);
 
@@ -161,15 +162,14 @@ $mainColor: #936a9b;
 
 .site-screenshot,
 .site-screenshot-header {
-    height: 64px;
     margin: 0 24px 0 0;
     min-width: 102.4px;
     position: relative;
     overflow: hidden;
 }
 
-.site-screenshot-header {
-    height: 30px;
+.site-screenshot {
+    height: 64px;
 }
 
 .site-screenshot:before {
@@ -211,8 +211,8 @@ $mainColor: #936a9b;
 }
 
 .site-info {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 380px;
+    max-width: 380px;
 
     h2 {
         margin: 0px;
@@ -243,7 +243,7 @@ $mainColor: #936a9b;
 }
 
 .site-actions {
-    min-width: 200px;
+    min-width: 150px;
 
     i {
         color: $mainColor;
@@ -302,13 +302,14 @@ $mainColor: #936a9b;
         cursor: pointer;
         padding: 14px 16px;
         transition: .3s;
+        background-color: transparent !important;
 
         &:hover {
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.1) !important;
         }
 
         &.active {
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.2) !important;
         }
     }
 }
@@ -341,6 +342,8 @@ $mainColor: #936a9b;
 }
 
 .page {
+    display: flex;
+    align-items: center;
     font-size: 12px;
     text-align: left;
     padding: 5px;
@@ -364,24 +367,31 @@ $mainColor: #936a9b;
     }
 }
 
+.page-title{
+    word-wrap: break-all;
+    overflow-wrap: break-all;
+    flex: 1;
+}
+
+.page-oper{
+    display: flex;
+    flex: none;
+}
+.page-copy,
 .page-edit,
 .page-close {
     opacity: .5;
-    float: right;
     background-color: rgba(0, 0, 0, .1);
     border: 1px solid rgba(0, 0, 0, .2);
     height: 17px;
     width: 17px;
     text-align: center;
     border-radius: 3px;
+    margin-left: 5px;
 
     &:hover {
         opacity: 1;
     }
-}
-
-.page-edit {
-    margin-right: 5px;
 }
 
 .group {

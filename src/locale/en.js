@@ -2,12 +2,12 @@ export default {
     'grapesjs-project-manager': {
         templates: {
             all: 'All',
-            templates: 'Templates',
+            newTemplates: 'New Site',
             search: 'Search for sites by name or id',
             open: 'Open',
-            new: 'Enter new page name',
+            new: 'Enter new site name',
             create: 'Create',
-            help: 'Select a template, enter project name, then click create. If no template is selected a blank project will be created.',
+            help: 'Select a site, enter project name, then click create. If no site is selected a blank project will be created.',
             info: 'Site Info',
             updated: 'Last Updated',
             pages: 'Pages',
