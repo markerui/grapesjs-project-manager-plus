@@ -1,6 +1,6 @@
 {
     "name": "grapesjs-project-manager-plus",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "Grapesjs Project Manager",
     "main": "dist/grapesjs-project-manager-plus.min.js",
     "repository": {
@@ -25,7 +25,6 @@
     "author": "Brendon Ngirazi",
     "license": "MIT",
     "dependencies": {
-        "dom-to-image": "^2.6.0",
-        "grapesjs-blocks-basic-extend": "^1.0.10"
+        "dom-to-image": "^2.6.0"
     }
 }

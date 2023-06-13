@@ -2,6 +2,7 @@ import TemplateManager, { PagesApp, SettingsApp } from './manager';
 import commands from './commands';
 import storage from './storage';
 import en from './locale/en';
+import loadResizer from './utils/resizer';
 
 export default (editor, opts = {}) => {
     const options = {
@@ -110,6 +111,10 @@ export default (editor, opts = {}) => {
             },
 
             i18n: {},
+            resizer: 1,
+            minScreenSize: 320,
+            dragDampen: 1,
+            hideOnZoom: 1,
         },
         ...opts,
     };
@@ -123,6 +128,9 @@ export default (editor, opts = {}) => {
     editor.TemplateManager = new TemplateManager(editor, options);
     editor.PagesApp = new PagesApp(editor, options);
     editor.SettingsApp = new SettingsApp(editor, options);
+
+    // load resizer
+    loadResizer(editor, options);
 
     // Load commands
     commands(editor, options);
@@ -145,7 +153,7 @@ export default (editor, opts = {}) => {
                 cs.setIsTemplate(firstPage.template);
                 cs.setDescription(firstPage.description || '');
                 cs.setGlobalSetting(firstPage.globalSetting || '');
-                await editor.load();
+                await editor.load(); 
                 editor.stopCommand('sw-visibility');
                 editor.runCommand('sw-visibility');
             } else {
