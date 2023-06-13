@@ -110,6 +110,7 @@ export default class TemplateManager extends UI {
         cs.setThumbnail(res.thumbnail || '');
         cs.setIsTemplate(res.template);
         cs.setDescription(res.description || 'No description');
+        cs.setGlobalSetting(res.globalSetting || '');
         editor.Modal.close();
     }
 
@@ -125,6 +126,7 @@ export default class TemplateManager extends UI {
             thumbnail: '',
             styles: '[]',
             description: 'No description',
+            globalSetting: '',
             pages: `[{"id": "${crypto.randomUUID().substring(0, 13)}", "name": "index"}]`,
             styles: '[]',
             assets: '[]'
@@ -138,6 +140,7 @@ export default class TemplateManager extends UI {
             cs.setName(res.name);
             cs.setThumbnail(res.thumbnail || '');
             cs.setDescription(res.description || 'No description');
+            cs.setGlobalSetting(res.globalSetting || '');
             editor.Modal.close();
         } else {
             cs.setId(projectId);
@@ -147,6 +150,7 @@ export default class TemplateManager extends UI {
             cs.setName(name);
             cs.setThumbnail(res.thumbnail || '');
             cs.setDescription(res.description || 'No description');
+            cs.setGlobalSetting(res.globalSetting || '');
             editor.Modal.close();
         }
     }
@@ -181,6 +185,7 @@ export default class TemplateManager extends UI {
             cs.setName(res.name);
             cs.setThumbnail(res.thumbnail || '');
             cs.setDescription(res.description || 'No description');
+            cs.setGlobalSetting(res.globalSetting || '');
             const sites = await cs.loadAll();
             setState({ sites });
         }

@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <title>Grapesjs Project Manager</title>
     <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="dist/grapesjs-project-manager-plus.min.css">
     <script src="https://unpkg.com/grapesjs"></script>
+    <link rel="stylesheet" href="dist/grapesjs-project-manager-plus.min.css">
     <style>
         body,
         html {
@@ -37,7 +37,7 @@
             storageManager: {
                 type: 'indexeddb'
             },
-            plugins: ['grapesjs-project-manager-plus'],
+            plugins: ['grapesjs-project-manager-plus', 'grapesjs-blocks-basic-extend'],
             pluginsOpts: {
                 'grapesjs-project-manager-plus': { /* Test here your options  */ }
             }

@@ -22,10 +22,10 @@ Project, template and page manager for grapesjs. This version makes use of the [
 
 ### HTML
 ```html
-<link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
-<link href="https://unpkg.com/grapesjs-project-manager-plus/dist/grapesjs-project-manager-plus.min.css" rel="stylesheet">
-<script src="https://unpkg.com/grapesjs"></script>
-<script src="https://unpkg.com/grapesjs-project-manager-plus"></script>
+<link href="path/grapes.min.css" rel="stylesheet">
+<link href="path/grapesjs-project-manager-plus.min.css" rel="stylesheet">
+<script src="path/grapesjs"></script>
+<script src="path/grapesjs-project-manager-plus"></script>
 
 <div id="gjs"></div>
 ```

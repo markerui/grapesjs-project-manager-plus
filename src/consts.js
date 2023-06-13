@@ -7,6 +7,7 @@ export const storageIDB = 'indexeddb',
         currentThumbnail: '',
         isTemplate: false,
         description: 'No description',
+        globalSetting: '',
 
         setId(id) {
             this.currentId = id;
@@ -18,6 +19,10 @@ export const storageIDB = 'indexeddb',
 
         setThumbnail(thumbnail) {
             this.currentThumbnail = thumbnail;
+        },
+
+        setGlobalSetting(globalSetting) {
+            this.globalSetting = globalSetting;
         },
 
         setIsTemplate(isTemplate) {

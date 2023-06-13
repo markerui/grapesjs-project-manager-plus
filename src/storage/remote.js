@@ -34,6 +34,7 @@ export default (editor, opts = {}) => {
                 template: this.isTemplate,
                 thumbnail: this.currentThumbnail,
                 description: this.description,
+                globalSetting: this.globalSetting,
                 updated_at: Date.now(),
                 ...data
             }, {

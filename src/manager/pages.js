@@ -8,14 +8,20 @@ export default class PagesApp extends UI {
         this.copyPage = this.copyPage.bind(this);
         this.removePage = this.removePage.bind(this);
         this.isSelected = this.isSelected.bind(this);
-        this.handleNameInput = this.handleNameInput.bind(this);
+        // this.handleEditInput = this.handleEditInput.bind(this);
         this.openEdit = this.openEdit.bind(this);
 
         /* Set initial app state */
         this.state = {
             editablePageId: '',
             isShowing: true,
-            nameText: '',
+            pageInfo: {
+                name: '',
+                title: '',
+                keywords: '',
+                description: '',
+                pageSetting: ''
+            },
             pages: [],
             loading: false
         };
@@ -82,28 +88,34 @@ export default class PagesApp extends UI {
         editor.runCommand('open-settings');
     }
 
-    editPage(id, name) {
+    editPage(id, options) {
+        const { name, title, keywords, description, pageSetting} = options
         const currentPage = this.pm.get(id);
         currentPage?.set('name', name);
+        currentPage?.set('title', title);
+        currentPage?.set('keywords', keywords);
+        currentPage?.set('description', description);
+        currentPage?.set('pageSetting', pageSetting);
         this.update()
     }
 
     addPage() {
         const { pm } = this;
-        const { nameText } = this.state
-        if (!nameText) return;
+        const { name } = this.state.pageInfo
+        if (!name) return;
         pm.add({
-            name: nameText,
+            name,
             component: ''
         });
         this.update();
     }
 
-    handleNameInput(e) {
-        this.setStateSilent({
-            nameText: e.target.value.trim()
-        })
-    }
+    // handleEditInput(e) {
+    //     this.setStateSilent({
+    //         nameText: e.target.value.trim()
+    //     })
+    // }
+
 
     renderPagesList() {
         const { pages, loading } = this.state;
@@ -157,7 +169,7 @@ export default class PagesApp extends UI {
                 </div>
             </div>`);
         cont.find('.add-page').on('click', this.addPage);
-        cont.find('input').on('change', this.handleNameInput);
+        // cont.find('input').on('change', this.handleEditInput);
 
         this.$el = cont;
         return cont;

@@ -143,6 +143,8 @@ export default (editor, opts = {}) => {
                 cs.setName(firstPage.name);
                 cs.setThumbnail(firstPage.thumbnail);
                 cs.setIsTemplate(firstPage.template);
+                cs.setDescription(firstPage.description || '');
+                cs.setGlobalSetting(firstPage.globalSetting || '');
                 await editor.load();
                 editor.stopCommand('sw-visibility');
                 editor.runCommand('sw-visibility');

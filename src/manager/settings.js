@@ -42,14 +42,26 @@ export default class SettingsApp extends UI {
         if (tab === 'page') {
             const id = editor.PagesApp.editableId;
             const name = $el?.find('input.name').val().trim();
-            id && editor.PagesApp.editPage(id, name);
+            const title = $el?.find('input.title').val().trim();
+            const keywords = $el?.find('textarea.keywords').val().trim();
+            const description = $el?.find('textarea.description').val().trim();
+            const pageSetting = $el?.find('textarea.pageSetting').val().trim();
+            id && editor.PagesApp.editPage(id, {
+                name,
+                title,
+                keywords,
+                description,
+                pageSetting
+            });
         } else {
             const id = editor.TemplateManager.editableId;
             const thumbnail = $el?.find('input.thumbnail').val().trim();
             const name = $el?.find('input.name').val().trim();
             const description = $el?.find('input.desc').val().trim();
-            const template = $el?.find('input.template').get(0).checked;
-            id && editor.TemplateManager.handleEdit({ id, thumbnail, name, description, template });
+            // const template = $el?.find('input.template').get(0).checked;
+            const template = false;
+            const globalSetting = $el?.find('textarea.globalSetting').val().trim();
+            id && editor.TemplateManager.handleEdit({ id, thumbnail, name, description, template, globalSetting });
         }
         editor.Modal.close();
     }
@@ -76,15 +88,53 @@ export default class SettingsApp extends UI {
 
         if (tab === 'page') {
             const page = pm.get(editor.PagesApp.editableId);
-            const value = page?.get('name') || page?.id || '';
+            console.log(page)
+            const nameValue = page?.get('name') || page?.id || '';
+            const titleValue = page?.get('title') || '';
+            const keywordsValue = page?.get('keywords') || '';
+            const descriptionValue = page?.get('description') || '';
+            const pageSettingValue = page?.get('pageSetting') || '';
             return `<label for="name">
                     ${editor.I18n.t('grapesjs-project-manager.settings.labels.name')}
                 </label>
                 <div class="flex-row">
                     <input 
                         class="name tm-input" 
-                        value="${value}" 
+                        value="${nameValue}" 
                         placeholder="${editor.I18n.t('grapesjs-project-manager.settings.placeholders.name')}"/>
+                </div>
+                <label for="title">
+                    ${editor.I18n.t('grapesjs-project-manager.settings.labels.title')}
+                </label>
+                <div class="flex-row">
+                    <input 
+                        class="title tm-input" 
+                        value="${titleValue}" 
+                        placeholder="${editor.I18n.t('grapesjs-project-manager.settings.placeholders.title')}"/>
+                </div>
+                <label for="keywords">
+                    ${editor.I18n.t('grapesjs-project-manager.settings.labels.keywords')}
+                </label>
+                <div class="flex-row">
+                    <textarea 
+                        class="keywords tm-input" 
+                        placeholder="${editor.I18n.t('grapesjs-project-manager.settings.placeholders.keywords')}">${keywordsValue}</textarea>
+                </div>
+                <label for="description">
+                    ${editor.I18n.t('grapesjs-project-manager.settings.labels.description')}
+                </label>
+                <div class="flex-row">
+                    <textarea 
+                        class="description tm-input" 
+                        placeholder="${editor.I18n.t('grapesjs-project-manager.settings.placeholders.description')}">${descriptionValue}</textarea>
+                </div>
+                <label for="pageSetting">
+                    ${editor.I18n.t('grapesjs-project-manager.settings.labels.pageSetting')}
+                </label>
+                <div class="flex-row">
+                    <textarea 
+                        class="pageSetting tm-input" 
+                        placeholder="${editor.I18n.t('grapesjs-project-manager.settings.placeholders.pageSetting')}">${pageSettingValue}</textarea>
                 </div>`
         } else {
             const clb = site => site.id === editor.TemplateManager.editableId;
@@ -133,14 +183,26 @@ export default class SettingsApp extends UI {
                         placeholder="${editor.I18n.t('grapesjs-project-manager.settings.placeholders.description')}"
                     />
                 </div>
-                <div class="flex-row group">
-                    <input id="template" class="template" type="checkbox" ${site?.template ? 'checked' : ''}/>
-                    <label for="template">
-                        ${editor.I18n.t('grapesjs-project-manager.settings.labels.template')}
-                    </label>
+                
+                <label for="desc">
+                    ${editor.I18n.t('grapesjs-project-manager.settings.labels.globalSetting')}
+                </label>
+                <div class="flex-row">
+                    <textarea 
+                        id="desc" 
+                        class="globalSetting tm-input" 
+                        placeholder="${editor.I18n.t('grapesjs-project-manager.settings.placeholders.globalSetting')}"
+                    >${site?.globalSetting || ''}</textarea>
                 </div>`
         }
     }
+
+    // <div class="flex-row group">
+//                 <input id="template" class="template" type="checkbox" ${site?.template ? 'checked' : ''}/>
+//                 <label for="template">
+//                     ${editor.I18n.t('grapesjs-project-manager.settings.labels.template')}
+//                 </label>
+//             </div>
 
     render() {
         const { $, editor } = this;

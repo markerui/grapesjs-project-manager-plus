@@ -38,12 +38,20 @@ export default {
                 name: 'Name',
                 thumbnail: 'Thumbnail',
                 description: 'Description',
-                template: 'Template'
+                template: 'Template',
+                keywords: 'Keywords',
+                title: 'Title',
+                pageSetting: 'Page Setting',
+                globalSetting: 'Global Setting'
             },
             placeholders: {
                 name: 'Name...',
                 thumbnail: 'Thumbnail...',
                 description: 'Description...',
+                keywords: 'Keywords...',
+                title: 'Title...',
+                pageSetting: 'Page Setting...',
+                globalSetting: 'Global Setting...'
             },
         },
     }
