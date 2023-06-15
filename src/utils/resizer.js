@@ -106,9 +106,7 @@ export default (editor, opts = {}) => {
                             // Set the iframe width
                             maxLeftPos = uleft;
                             if (!frame) frame = $('.gjs-frame-wrapper');
-                            console.log(frame, width)
-                            frame.css('width', width);
-
+                            $('.gjs-frame-wrapper').css('width', width);
                             // Set the position left of the left handle
                             hints.find('.left-handle').css('left', left);
 
